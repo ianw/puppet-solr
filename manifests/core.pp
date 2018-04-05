@@ -72,18 +72,4 @@ define solr::core(
     require => File["${solr_home}/${core_name}/conf"],
   }
 
-  xml_fragment { "${core_name}_config":
-    path    => "${solr_home}/solr.xml",
-    xpath   => "/solr/cores/core[@name='${core_name}']",
-    content => {
-      attributes => {
-        name        => $core_name,
-        instanceDir => "${solr_home}/${core_name}",
-        dataDir     => "${data_dir}/${core_name}",
-      },
-    },
-    require => File["${data_dir}/${core_name}"],
-    notify  => Service[$jetty_service],
-  }
-
 }
